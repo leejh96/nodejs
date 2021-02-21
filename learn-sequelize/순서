@@ -1,0 +1,23 @@
+sequelize 환경 만들기 
+1. express generator로 express 폴더 만들기
+=> express learn-sequelize --view=pug
+2. learn-sequelize 에서 npm package 설치
+=> npm i
+3. SQL문을 안쓰고 sequelize라는 ORM을 사용
+=> npm i sequelize
+4. sequelize는 mysql을 연결해주는 것이기 때문에 mysql2라는 패키지도 설치
+=> npm i mysql2
+5. sequelize는 명령 프롬프트에서 명령어를 제공하기 때문에 명령 프롬프트에서 명령어를 사용하기 위해서는 글로벌 설치를 해야함
+=>  npm i -g sequelize-cli   ※여기서 cli는 command line interface를 의미
+6. sequelize 명령어 실행하여 필요한 파일과 폴더를 만들어줌
+=> sequelize init
+
+
+sequelize에서는 models에서 index.js가 가장 중요
+
+
+
+index2 -> config -> models>comment, user -> views>sequelize
+-> public>sequelize -> routes> comments,index,users -> app.js
+
+이사람이 준 파일이 달라서 실행안됨

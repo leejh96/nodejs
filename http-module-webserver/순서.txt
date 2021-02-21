@@ -1,0 +1,5 @@
+server1 -> server2 -> cookie 
+server3 -> cookie2
+session
+
+//이건 개발자도구와 같이 볼 것

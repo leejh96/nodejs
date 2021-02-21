@@ -1,0 +1,4 @@
+express 실행할 땐 npm start -> 이건 package.json 파일에서 scripts 부분에서 확인
+bin>www(서버실행부, 한글부분만 봐볼것) -> app2(app) -> routes index, users
+
+learn-express2 는 view방식이 ejs

@@ -1,0 +1,9 @@
+npm init(package.json 생성) -> npm i -g sequelize-cli(터미널에 sequelize명령어를 칠수있음)
+-> npm i sequelize mysql2 -> npm i sequelize mysql2(sequelize, mysql 설치)
+-> sequelize init(config, migration, seeders 폴더 생성 )
+-> config.json에서 db설정해주기
+-> sequelize db:create 로 DB생성해주기
+-> npm i -D nodemon 으로 nodemon 설치(서버 코드가 바뀌는 것을 알아서 감지하는 패키지)
+-> npm i -g nodemon으로 전역설치하여 프롬프트에서도 사용가능하게만듬
+-> npm i express cookie-parser express-session morgan connect-flash ejs
+-> npm i dotenv 으로 보안을 높여줌

@@ -14,7 +14,7 @@ const app = express();
 //view엔진으로는 ejs, pug, jade 등이 존재
 //set한 값은 app.get('view engine')하면 jade가 나온다.
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 //express.~는 express 자체 미들웨어이고 아닌것은 다른 사용자가 만든 미들웨이이다
 //logger 미들웨어는 get, post ,delete와 같은 라우터 미들웨어를 만날 경우

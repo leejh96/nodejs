@@ -14,7 +14,7 @@ var app = express();
 sequelize.sync();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'html');
+app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 //본문해석한 뒤에 req.body에 넣어줌

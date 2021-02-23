@@ -28,9 +28,6 @@ document.querySelectorAll('#user-list tr').forEach((el) => {
         td = document.createElement('td');
         td.textContent = user.age;
         row.appendChild(td);
-        td = document.createElement('td');
-        td.textContent = user.married ? '기혼' : '미혼';
-        row.appendChild(td);
         tbody.appendChild(row);
       });
     } catch (err) {
@@ -98,7 +95,6 @@ document.querySelectorAll('#user-list tr').forEach((el) => {
     e.preventDefault();
     const name = e.target.username.value;
     const age = parseInt(e.target.age.value,10);
-    const married = e.target.married.checked;
     if (!name) {
       return alert('이름을 입력하세요');
     }
@@ -106,14 +102,13 @@ document.querySelectorAll('#user-list tr').forEach((el) => {
       return alert('나이를 입력하세요');
     }
     try {
-      await axios.post('/users', { name, age, married });
+      await axios.post('/users', { name, age });
       getUser();
     } catch (err) {
       console.error(err);
     }
     e.target.username.value = '';
     e.target.age.value = '';
-    e.target.married.checked = false;
   });
   // 댓글 등록 시
   document.getElementById('comment-form').addEventListener('submit', async (e) => {

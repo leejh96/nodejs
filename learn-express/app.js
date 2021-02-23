@@ -12,7 +12,7 @@ var app = express();
 // view engine setup
 //app.set은 express 설정 또는 값 저장에 이용
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
 //app.use는 미들웨어를 장착시킬 때 사용
 //use안에 있는 것이 미들웨어이다.

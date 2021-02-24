@@ -7,3 +7,6 @@ npm init(package.json 생성) -> npm i -g sequelize-cli(터미널에 sequelize�
 -> npm i -g nodemon으로 전역설치하여 프롬프트에서도 사용가능하게만듬
 -> npm i express cookie-parser express-session morgan connect-flash ejs
 -> npm i dotenv 으로 보안을 높여줌
+-> npm i passport passport-local passport-kakao bcrypt 
+//passport는 본체, passport-local은 이메일로그인, passport-kakao는 카카오 로그인 구현
+을 위한 패키지, bcrypt는 비밀번호 암호화패키지

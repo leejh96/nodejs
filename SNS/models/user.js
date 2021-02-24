@@ -1,4 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
+    //{charset:'utf8', collate:'utf8_general_ci'}는 한글을 쓸수있게 해줌
     return sequelize.define('user',{
         email:{
             type: DataTypes.STRING(40),
@@ -26,5 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true,
         paranoid: true, //삭제일 기록, 데이터 복구가능
+        charset:'utf8',
+        collate:'utf8_general_ci'
     })
 };

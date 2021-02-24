@@ -7,10 +7,14 @@ const flash = require('connect-flash');
 require('dotenv').config(); // .env파일의 값이 process.env에 들어감
 const indexRouter = require('./routes/index');
 const userRouter = require('./routes/user');
+const passport = require('passport');
 const { sequelize } = require('./models');
+const passportConfig = require('./passport');
+const authRouter = require('./routes/auth');
 
 const app = express();
 sequelize.sync()
+passportConfig(passport);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname,'views'));
@@ -31,9 +35,18 @@ app.use(session({
     },
 }));
 //일회성 메시지
-app.use(flash())
+//새로고침하면 없어지는 메시지
+app.use(flash());
+
+//passport 설정 초기화
+app.use(passport.initialize());
+//localStategy로 로그인 시 사용자 정보를 세션에 저장
+//항상 express session보다는 아래에 있어야 함 (28줄)
+//express session이 만든 세션을 passport.session이 사용한다.
+app.use(passport.session());
 
 app.use('/',indexRouter);
+app.use('/auth',authRouter);
 
 app.use((req, res, next)=>{
     const err = new Error('NotFound');

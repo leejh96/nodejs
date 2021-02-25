@@ -10,3 +10,12 @@ npm init(package.json 생성) -> npm i -g sequelize-cli(터미널에 sequelize�
 -> npm i passport passport-local passport-kakao bcrypt 
 //passport는 본체, passport-local은 이메일로그인, passport-kakao는 카카오 로그인 구현
 을 위한 패키지, bcrypt는 비밀번호 암호화패키지
+-> developers.kakao.com 에 들어가서 내 애플리케이션으로 가서 앱을 만든다.
+-> 그럼 생성되는 REST API 키를 복사해서 .env 파일에 KAKAO_ID로 저장
+-> 그 후 플랫폼 탭에 들어가서 Web 플랫폼 등록을 클릭 후 도메인에는 http://localhost:8001 입력
+-> 밑에 Redirect URl 등록하러 가기 클릭
+-> URL는 http://localhost:8001/auth/kakao/callback 입력
+//auth/kakao/callback은 kakaoStrategy.js 파일에 있는 콜백URL과 같아야한다.
+->활성화 설정도 on으로 바꿔준다
+->동의항목 탭으로 들어가 필요한 정보(프로필정보, 카카오계정)를 설정한다.
+동의 목적란은 왜 필요한지 사용자에게 알려주는 내용이다.

@@ -11,6 +11,7 @@ const passport = require('passport');
 const { sequelize } = require('./models');
 const passportConfig = require('./passport');
 const authRouter = require('./routes/auth');
+const postRouter = require('./routes/post');
 
 const app = express();
 sequelize.sync()
@@ -22,6 +23,10 @@ app.set('port', process.env.PORT || 8001);
 
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
+//이미지를 가져오기위한 정적파일
+//실세 경로는 uploads이지만 프론트에서 불러오기 위해서는 /img/파일이름 이런식으로
+//가져와야 한다. 보안을 위함
+app.use('/img',express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -47,7 +52,8 @@ app.use(passport.session());
 
 app.use('/',indexRouter);
 app.use('/auth',authRouter);
-
+app.use('/post',postRouter);
+app.use('/user',userRouter);
 app.use((req, res, next)=>{
     const err = new Error('NotFound');
     err.status = 404;

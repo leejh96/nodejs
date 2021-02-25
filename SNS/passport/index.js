@@ -3,7 +3,7 @@ const kakao = require('./kakaoStrategy');
 const { User } = require('../models');
 
 //캐슁 하기위한 장소
-const user = {};
+//const user = {};
 //local로그인은 db저장된 이메일과 사용자가 입력한 이메일을 비교하여
 //입력한 비밀번호가 옳은지 확인하여 로그인을 시켜주는 로직
 //kakao 로그인은 카카오 버튼을 누르면 사용자는 카카오 로그인을 하고
@@ -37,12 +37,24 @@ module. exports = (passport) =>{
         //         .then(user => user[id] = user, done(null, user))
         //         .catch(err => done(err));
         // }
-
-        //위방법이 캐슁이고 로그인하면 안바뀌어서 이거로씀
-        User.findOne({ where: { id } })
+        // 위방법이 캐슁이고 로그인하면 안바뀌어서 이거로씀
+        User.findOne({ 
+            //이 관계는 팔로워를 가져오는 부분
+            where: { id },
+            include: [{
+                model: User,
+                attributes: ['id', 'nick'],
+                as: 'Followers',
+            },{
+                //이관계는 팔로잉을 가져오는 부분
+                model: User,
+                attributes:['id', 'nick'],
+                as: 'Followings'
+            }]
+        })
         .then(user => done(null, user))
         .catch(err => done(err));
     });
     local(passport);
-    // kakao(passport);
+    kakao(passport);
 };

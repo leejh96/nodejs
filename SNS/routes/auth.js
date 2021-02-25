@@ -78,4 +78,15 @@ router.get('/logout', isLoggedIn, (req, res)=>{
     req.session.destroy();
     res.redirect('/');
 });
+//kakaoStrategy 실행시켜서 카카오에 인증을 맡긴다.
+router. get('/kakao', passport.authenticate('kakao'));
+
+//kakaoStrategy.js에 callbackURL값이랑 get안의 값이 일치해야 한다.
+router.get('/kakao/callback', passport.authenticate('kakao',{
+    //키카오 로그인 실패 시 메인으로 돌아가게함 
+    failureRedirect: '/',
+}), (req, res) =>{
+    //성공할 경우 메인으로 가게함
+    res.redirect('/');
+});
 module.exports = router;

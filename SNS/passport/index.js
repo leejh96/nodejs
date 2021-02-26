@@ -39,9 +39,10 @@ module. exports = (passport) =>{
         // }
         // 위방법이 캐슁이고 로그인하면 안바뀌어서 이거로씀
         User.findOne({ 
-            //이 관계는 팔로워를 가져오는 부분
+            
             where: { id },
             include: [{
+                //이 관계는 팔로워를 가져오는 부분
                 model: User,
                 attributes: ['id', 'nick'],
                 as: 'Followers',

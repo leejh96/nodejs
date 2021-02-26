@@ -1,0 +1,12 @@
+1. npm i cookie-parser dotenv express express-session morgan pug axios
+axios는 다른 서버에 요청을 쉽게 보낼 수 있는 패키지
+2. .env에 COOKIE_SECRET = SNSdcall  => cookie-parser와 express-session에 쓰일 비밀키
+          CLIENT_SECRET = 값  => 값에는 sns-api로 발급받은 클라이언트 비밀키를 넣어준다.
+env에 CLIENT_SECRET은 localhost:8003의 클라이언트 비밀키를 넣어야한다.(8002,8001 x)
+
+
+CORS는 프론트에서 다른 오리진 서버로 요청을 보내면 에러가 발생하는 현상
+즉, 프론트 대 서버 요청 시 에러가 나는 현상이다.(서버 대 서버 x)
+http://localhost:8003 여기에서 localhost:8003이 오리진이다.
+오리진이 localhost:8003인 프론트에서 localhost:8002인 오리진으로 요청을 보내면
+에러가 발생하는 것

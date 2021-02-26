@@ -1,0 +1,23 @@
+SNS를 sns-api로 나눠주는 이유는 sns-api를 고장내더라도 본체인 SNS는 죽지 않게
+하기 위함이다.
+
+1. npm i bcrypt connect-flash cookie-parser dotenv express express-session
+morgan mysql2 passport passport-kakao
+2. npm i passport-localhost pug sequelize uuid
+3. SNS에서 config models passport routes .env 복사해서 붙여넣기
+4. views 폴더 생성후 error.pug 생성
+5. routes에서 auth와 middlewares 제외한 나머지 파일 제거
+6. npm i jsonwebtoken (JWT)
+-> .env파일에 JWT_SECRET=jwtSecret 추가 값은 바뀌어도 상관없다 
+7. npm i express-rate-limit 설치
+사용량을 제한하기 위한 모듈
+8. npm i cors
+CORS 에러를 해결하기 위한 모듈설치
+
+
+
+
+
+sns-api는 토큰을 만들어주는 서버라면
+sns-call은 토큰을 만들어달라고 요청하는 서버이다.
+이 구조를 하기 위해서는 8001 8002 8003 서버가 다켜져있어야 한다.

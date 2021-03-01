@@ -1,0 +1,10 @@
+웹소켓은 양방향으로 실시간데이터를 전송하기 위한 방식이다.
+1. npm init
+2. npm connect-flash cookie-parser dotenv express express-session morgan pug
+3. npm i -D nodemon  -> -D는 개발자 환경으로 라는 뜻
+4. npm i ws -> 웹소켓
+
+wsApp.js, wsSocket.js wsIndex.pug이 웹소켓에 해당
+-------------------------------------------------------------------
+Socket.io
+1. npm i socket.io

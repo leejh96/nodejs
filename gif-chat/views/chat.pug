@@ -1,0 +1,120 @@
+extends layout
+
+block content
+  h1= title
+  a#exit-btn(href='/') 방 나가기
+  #number
+    | 참여자 수
+    #number-count= number
+  fieldset
+    legend 채팅 내용
+    #chat-list
+      for chat in chats
+        if chat.user === user
+          .mine(style='color:' + chat.user)
+            div= chat.user
+            if chat.gif
+              img(src='/gif/' + chat.gif)
+            else
+              div= chat.chat
+        else if chat.user === 'system'
+          .system
+            div= chat.chat
+        else
+          .other(style='color:' + chat.user)
+            div= chat.user
+            if chat.gif
+              img(src='/gif/' + chat.gif)
+            else
+              div= chat.chat
+  form#chat-form(action='/chat' method='post' enctype='multipart/form-data')
+    label(for='gif') GIF 올리기
+    //사진 선택하는 창
+    input#gif(type='file' name='gif' accept='image/gif')
+    input#chat(name='chat')
+    button(type='submit') 전송
+  script(src='/socket.io/socket.io.js')
+  script.
+    //chat가 네임스페이스
+    var socket = io.connect('http://localhost:8005/chat', {
+      path: '/socket.io'
+    });
+    //방에 참여 했을 때
+    socket.on('join', function (data) {
+      document.querySelector('#number-count').textContent = (data.number)
+      var div = document.createElement('div');
+      div.classList.add('system');
+      var chat = document.createElement('div');
+      div.textContent = data.chat;
+      div.appendChild(chat);
+      document.querySelector('#chat-list').appendChild(div);
+    });
+    //방에서 나갔을 때
+    socket.on('exit', function (data) {
+      document.querySelector('#number-count').textContent = (data.number)
+      var div = document.createElement('div');
+      div.classList.add('system');
+      var chat = document.createElement('div');
+      div.textContent = data.chat;
+      div.appendChild(chat);
+      document.querySelector('#chat-list').appendChild(div);
+    });
+    //실시간 채팅이 올라오는 이벤트
+    socket.on('chat', function (data) {
+      var div = document.createElement('div');
+      if (data.user === '#{user}') {
+        div.classList.add('mine');
+      } else {
+        div.classList.add('other');
+      }
+      var name = document.createElement('div');
+      name.textContent = data.user;
+      div.appendChild(name);
+      if (data.chat) {
+        var chat = document.createElement('div');
+        chat.textContent = data.chat;
+        div.appendChild(chat);
+      } else {
+        var gif = document.createElement('img');
+        gif.src = '/gif/' + data.gif;
+        div.appendChild(gif);
+      }
+      div.style.color = data.user;
+      document.querySelector('#chat-list').appendChild(div);
+    });
+    //채팅내용을 서버로 웹소켓을 통해 전송
+    document.querySelector('#chat-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (e.target.chat.value) {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          if (xhr.status === 200) {
+            e.target.chat.value = '';
+          } else {
+            console.error(xhr.responseText);
+          }
+        };
+        //DB를 건들여야 하기때문에 라우터로 바꿔줌
+        xhr.open('POST', '/room/#{room._id}/chat');
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify({ chat: this.chat.value }));
+      }
+    });
+    //gif올리기 부분(이미지 업로드)
+    document.querySelector('#gif').addEventListener('change', function (e) {
+      var formData = new FormData();
+      var xhr = new XMLHttpRequest();
+      console.log(e.target.files);
+      //선택한 사진을 formData에 저장
+      formData.append('gif', e.target.files[0]);
+      xhr.onload = function () {
+        if (xhr.status === 200) {
+          e.target.file = null;
+        } else {
+          console.error(xhr.responseText);
+        }
+      };
+      //사진을 post요청으로 보냄
+      xhr.open('POST', '/room/#{room._id}/gif');
+      xhr.send(formData);
+    });

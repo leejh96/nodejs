@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  div F12를 눌러 console 탭과 network 탭을 확인하세요.
+  script.
+    var webSocket = new WebSocket("ws://localhost:8005");
+    //socket.js의 connection 이랑 대응됨
+    webSocket.onopen = function () {
+      console.log('서버와 웹소켓 연결 성공!');
+    }
+    //ws.send로 보낸 데이터가 event변수로 온다.
+    webSocket.onmessage = function (event) {
+      console.log(event.data);
+      //여기서 보낸 데이터가 socket.js에서 message로 간다.
+      webSocket.send('클라이언트에서 서버로 답장을 보냅니다');
+    }

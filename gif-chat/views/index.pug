@@ -1,0 +1,24 @@
+doctype
+html
+  head
+    meta(charset='utf-8')
+    title GIF 채팅방
+  body
+    div F12를 눌러 console 탭과 network 탭을 확인하세요.
+    script(src='/socket.io/socket.io.js')
+    script.
+      var socket = io.connect('http://localhost:8005', {
+        //서버에 적어둔 path와 일치해야 연결가능
+        path: '/socket.io',
+        //socket.io는 처음에 http요청으로 웹소켓 사용 가능여부를 묻는다.
+        //지원안한다면 요청할때마다 응답을 해주는 방식으로 해야한다 
+        //웹소켓 지원하는지 http로 묻지않고 바로 웹소켓으로 연결
+        //지원하는지 안하는지 애매하면 써서 웹소켓 연결을 한다.
+        transports: ['websocket']
+      });
+      socket.on('news', function (data) {
+        console.log(data);
+        //socket의 on reply 이벤트로 가게 된다.
+        //서버의 메시지와 같은 명을 적어줘야 한다. reply면 reply, message면 message
+        socket.emit('reply', 'Hello Node.JS');
+      });

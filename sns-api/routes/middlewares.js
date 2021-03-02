@@ -45,7 +45,7 @@ exports.verifyToken = (req, res, next) => {
 
 //api 사용량 제한
 //무료 api limiter
-exports.apiLimiter = new RateLimit({
+exports.freeApiLimiter = new RateLimit({
   //이 시간 동안
   windowMs: 60 * 1000, // 1분
   //최대 횟수
@@ -60,8 +60,9 @@ exports.apiLimiter = new RateLimit({
     });
   },
 });
-//유료 사용자
+
 //api 사용량 제한
+//유료 사용자
 exports.PremiumApiLimiter = new RateLimit({
   //이 시간 동안
   windowMs: 60 * 1000, // 1분

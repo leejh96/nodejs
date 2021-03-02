@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => (
       //카카오에서 발급받은 키같은 것을 저장해두는 곳
       type: DataTypes.STRING(40),
       allowNull: false,
-    },
+    },r
   }, {
     //데이터가 올바르게 들어왔는지 검사하는 부분
     validate: {

@@ -157,4 +157,30 @@ router.post('/room/:id/gif', upload.single('gif'), async (req, res, next) => {
   }
 });
 
+//시스템메시지 처리를 위한 라우터
+router.post('/room/:id/sys', async(req, res, next)=>{
+  try{
+    //type이 join이면 입장하셨습니다를, exit이면 퇴장하셨습니다를 chat변수에 저장
+    const chat = req.body.type === 'join'
+      ? `${req.session.color}님이 입장하셨습니다.`
+      : `${req.session.color}님이 퇴장하셨습니다.`;
+    const sys = new Chat({
+      room: req.params.id,
+      user: 'system',
+      chat,
+    });
+    //위에서 가져온 내용을 몽고DB에 저장
+    await sys.save();
+    req.app.get('io').of('/chat').to(req.params.id).emit(req.body.type, {
+      user: 'system',
+      chat,
+      number: req.app.get('io').of('/chat').adapter.rooms[req.params.id].length
+    });
+    res.send('ok');
+  } catch(error){
+    console.error(error);
+    next(error);
+  }
+});
+
 module.exports = router;

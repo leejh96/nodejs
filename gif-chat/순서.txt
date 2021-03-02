@@ -8,3 +8,4 @@ wsApp.js, wsSocket.js wsIndex.pug이 웹소켓에 해당
 -------------------------------------------------------------------
 Socket.io
 1. npm i socket.io
+2. npm i cookie-signature -> 시스템메시지 전달용
